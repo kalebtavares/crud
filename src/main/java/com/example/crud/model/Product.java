@@ -1,7 +1,6 @@
 package com.example.crud.model;
 
 import jakarta.persistence.*;
-import org.hibernate.grammars.hql.HqlParser;
 
 @Entity(name = "product")
 @Table(name = "product")
@@ -13,10 +12,15 @@ public class Product {
     private String name;
     private Long price;
 
+
     public Product(Integer id, String name, long price) {
         this.id = id;
         this.name = name;
         this.price = price;
+    }
+
+    public Product() {
+
     }
 
     public Integer getId() {
