@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
@@ -22,6 +23,17 @@ public class ProductController {
     public ResponseEntity getAll(){
         List<Product> listProducts = repository.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(listProducts);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity getById(@PathVariable(value = "id") Integer id) {
+
+        Optional product = repository.findById(id);
+
+        if(product.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not Found");
+        }
+        return ResponseEntity.status(HttpStatus.FOUND).body(product.get());
     }
 
     @PostMapping
