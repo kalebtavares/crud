@@ -1,7 +1,9 @@
 package com.example.crud.controllers;
 
+import com.example.crud.dtos.ProductsDto;
 import com.example.crud.model.Product;
 import com.example.crud.repositories.ProductRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +25,10 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity (@RequestBody Product product) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(product));
+    public ResponseEntity saveProduct(@RequestBody ProductsDto dto) {
+        Product productModel = new Product();
+
+        BeanUtils.copyProperties(dto, productModel);
+        return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(productModel));
     }
 }
